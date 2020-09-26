@@ -10,10 +10,10 @@ namespace MongoDB
        
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello MongoDB!");
             Console.WriteLine("Eerst in cmd het volgende command uitvoeren nadat docker is geinstalleerd: ");
             Console.WriteLine("docker run -d -p 27017-27019:27017-27019 --name mongodb mongo:latest");
-            
+            Console.WriteLine();
             DoMongoDBStuff();
         }
 
@@ -21,15 +21,16 @@ namespace MongoDB
         {
             var dbClient = new MongoClient("mongodb://127.0.0.1:27017");
             var dbList = dbClient.ListDatabases().ToList();
-
             Console.WriteLine("The list of databases are:");
-
             foreach (var item in dbList)
             {
                 Console.WriteLine(item);
             }
+            Console.WriteLine();
 
             IMongoDatabase mongoDB = dbClient.GetDatabase("Person");
+            
+            //Typed
             IMongoCollection<Person> collection = mongoDB.GetCollection<Person>("employees");
             Person p = new Person
             {
@@ -54,7 +55,7 @@ namespace MongoDB
             };
 
             col2.InsertOne(doc);
-            var nieuw = col2.Find(new BsonDocument()).ToList();
+            var items = col2.Find(new BsonDocument()).ToList();
         }
     }
 
